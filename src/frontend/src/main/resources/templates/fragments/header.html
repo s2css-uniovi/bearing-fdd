@@ -1,0 +1,53 @@
+<header>
+	<div class="row justify-content-between align-items-center mt-2 ml-2 mb-2">
+		<div class="col-6" id="localeDiv">
+			<a id="langURLES" th:href="@{/webAppMotorElectrico/changeLocale(lang='es')}"><img id="langIMG" th:src="@{/images/esp.png}"></a>
+			<span> | </span>
+			<a id="langURLEN" th:href="@{/webAppMotorElectrico/changeLocale(lang='en')}"><img id="langIMG" th:src="@{/images/eng.png}"></a>
+		</div>
+		<div class="col-6 d-flex justify-content-end align-items-center">
+			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">
+			<a th:href="@{'/documents/ManualUsuario_ES.pdf'}" id="manualLinkES" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.manual.btt}" style="display: none;" target="_blank">
+				<span class="material-symbols-outlined">import_contacts</span>
+			</a>
+			<a th:href="@{'/documents/ManualUsuario_EN.pdf'}" id="manualLinkEN" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.manual.btt}" style="display: none;" target="_blank">
+				<span class="material-symbols-outlined">import_contacts</span>
+			</a>
+			<a th:href="@{'/documents/ManualAdmin_ES.pdf'}" id="manualAdminLinkES" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.manual.btt}" style="display: none;" target="_blank">
+				<span class="material-symbols-outlined">import_contacts</span>
+			</a>
+			<a th:href="@{'/documents/ManualAdmin_EN.pdf'}" id="manualAdminLinkEN" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.manual.btt}" style="display: none;" target="_blank">
+				<span class="material-symbols-outlined">import_contacts</span>
+			</a>
+			<a th:href="@{/webAppMotorElectrico/adminAccount}" id="manageLink" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.login.manage}" style="display: none;">
+				<span class="material-symbols-outlined" style="vertical-align: middle;">account_circle</span>
+			</a>
+			<form th:action="@{/webAppMotorElectrico/adminUsers}" method="get">
+				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.admin.users.btt}" style="display: none; width: 64px; height: 44px;">
+					<span class="material-symbols-outlined" style="vertical-align: middle;">manage_accounts</span>
+				</button>
+			</form>
+			<form th:action="@{/logout}" method="post">
+				<button id="logout" type="submit" value="Logout" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.logout}" style="display: none; width: 64px; height: 44px;">
+					<span class="material-symbols-outlined" style="vertical-align: middle;">logout</span>
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="row align-items-center" id="headID">
+		<div class="col-12 col-md-8">
+			<a th:href="@{/webAppMotorElectrico/home}" style="color: black;">
+				<h1 class="responsive-h1" id="webAppTitle" th:text="#{view.home.main}"></h1>
+			</a>
+		</div>
+		<div class="col-12 col-md-4 d-flex justify-content-around align-items-center">
+			<a href="https://www.cranfield.ac.uk/" target="_blank">
+				<img th:src="@{/images/Cranfield.png}" id="logoCran">
+			</a>
+			<a href="https://www.uniovi.es/" target="_blank">
+				<img th:src="@{/images/Uniovi.png}" id="logoUniovi">
+			</a>
+		</div>
+	</div>
+	<br>
+</header>

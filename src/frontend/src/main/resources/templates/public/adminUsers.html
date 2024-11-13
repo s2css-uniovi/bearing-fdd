@@ -1,0 +1,89 @@
+<th:block th:insert="~{/fragments/head}"></th:block>
+<title th:text="#{view.landing.admin.users.btt}"></title>
+
+<body>
+	<th:block th:insert="~{/fragments/header :: header}"></th:block>
+	<br>
+	<main>
+		<div class="row justify-content-center align-items-center mb-4">
+			<h1 class="responsive-h1" id="manageUserTitle" th:text="#{view.landing.admin.users.btt}"></h1>
+		</div>
+		<div class="row justify-content-center align-items-center mb-4">
+			<table id="usersTable" border="1">
+				<thead>
+					<tr>
+						<th th:text="#{view.landing.manage.user}"></th>
+						<th th:text="#{view.landing.manage.name}"></th>
+						<th th:text="#{view.landing.manage.surname}"></th>
+						<th th:text="#{view.landing.manage.mail}"></th>
+						<th th:text="#{view.landing.manage.rol}"></th>
+						<th th:text="#{view.landing.manage.options}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usuario, iterStat : ${userCreated}">
+						<td th:text="${usuario.usuario}"></td>
+						<td th:text="${usuario.nombre}"></td>
+						<td th:text="${usuario.apellido}"></td>
+						<td th:text="${usuario.email}"></td>
+						<td th:text="${usuario.role}"></td>
+						<td>
+							<a title="Edit" id="editUser" th:href="@{/webAppMotorElectrico/adminAccount(usuario=${usuario.usuario})}"><span class="material-symbols-outlined">edit</span></a>
+							<a title="Delete" id="deleteUser" th:onclick="confirmDelete(/*[[${usuario.usuario}]]*/)" th:style="${iterStat.index == 0 ? 'display:none;' : ''}"><span class="material-symbols-outlined">close</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="row justify-content-end align-items-center mb-4">
+			<button id="back-btt" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/webAppMotorElectrico/home';" style="margin-right: 12%;"></button>
+		</div>
+		<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<span th:text="#{view.modal.body.deleteUser}"></span>
+						<span id="userNameToDelete"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" onclick="$('#confirmDeleteModal').modal('hide');" th:text="#{view.modal.delete.candel.btt}"></button>
+						<button type="button" class="btn btn-danger" id="confirmDeleteButton" th:text="#{view.modal.delete.btt}"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<th:block th:insert="~{/fragments/footer}"></th:block>
+</body>
+<script>
+	$(document).ready(function () {
+		$("#manageLink").css({"display": "inline"});
+		$("#logout").css({"display": "inline"});
+		
+		var userLang;
+		if($("#manageUserTitle").text() == "Manage Users") {
+			userLang="en";
+		}else {
+			userLang="es-ES";
+		}
+		new DataTable('#usersTable', {
+			"bPaginate": true,
+			"bLengthChange": false,
+			"bFilter": true,
+			"bInfo": false,
+			"bAutoWidth": false,
+			info: false,
+			language: {
+				url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/'+userLang+'.json',
+			}
+		});
+	});
+    function confirmDelete(usuario) {
+        document.getElementById("confirmDeleteButton").setAttribute("onclick", "eliminarUser('" + usuario + "')");
+        
+        document.getElementById("userNameToDelete").innerText = usuario;
+        
+        $('#confirmDeleteModal').modal('show');
+    }
+</script>
+</html>

@@ -1,0 +1,119 @@
+<th:block th:insert="~{/fragments/head}"></th:block>
+<title th:text="#{view.home.title}"></title>
+
+<body>
+	<th:block th:insert="~{/fragments/header :: header}"></th:block>
+	<br>
+	<main>
+		<div class="row d-flex justify-content-center align-items-center">
+			<div class="col-12 col-md-11">
+				<div th:if="${errorsAPI}">
+					<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivAPI">
+						<span class="material-symbols-outlined">warning </span>
+						<h4 th:text="${errorsAPI}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+					</div>
+				</div>
+				<div class="row justify-content-center" style="text-align: center;">
+					<div class="col-12" id="mi-div">
+						<label th:text="#{view.home.table.tittle}"></label>
+					</div>
+				</div>
+				<div class="row d-flex justify-content-center mt-2" style="text-align: center;">
+					<div class="col-12 col-md-6 mb-2" id="mi-div-home-right">
+						<label th:text="#{view.home.table.pre}"></label>
+						<form id="formDataset" name="formDataset" method="get" action="/webAppMotorElectrico/preloaded">
+							<div id="mi-div-home" class="mb-2">
+								<div th:each="model, iterStat : ${resultDatatest.modelsList}"
+									style="text-align: start;">
+									<input type="checkbox" th:id="${'dataset_' + iterStat.index}" th:value="${model}"
+										name="selectedModel" class="single-checkbox" />
+									<label th:for="${'dataset_' + iterStat.index}"
+										th:text="${resultDatatest.modelsNames[iterStat.index]}"></label>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-12 col-md-6 mb-2" id="mi-div-home-left">
+						<label th:text="#{view.home.table.saved}"></label>
+						<form id="formSavedDataset" name="formSavedDataset" method="get"
+							action="/webAppMotorElectrico/newload">
+							<div id="mi-div-home" class="mb-2">
+								<div th:each="modelS, iterStat : ${resultSavedDatatest.modelsList}"
+									style="text-align: start;">
+									<div class="row justify-content-between align-items-center mb-2">
+										<div class="col-6 d-flex align-items-center">
+											<input type="checkbox" th:id="${'savedDataset_' + iterStat.index}"
+												th:value="${modelS}" name="selectedSavedModel"
+												class="single-checkbox" style="margin-right: 3px;"/>
+											<label th:text="${resultSavedDatatest.modelsNames[iterStat.index]}"
+												th:for="${'savedDataset_' + iterStat.index}"></label>
+										</div>
+										<div class="col-6 d-flex justify-content-end align-items-center">
+											<button type="button" th:onclick="confirmDelete(/*[[${modelS}]]*/)"
+												data-toggle="tooltip" data-placement="bottom"
+												th:title="#{view.load.erase.data}">
+												<span class="material-symbols-outlined"
+													style="vertical-align: middle;">close</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="row d-flex justify-content-center" id="submitButtonContainer">
+						<div class="col-12 col-md-12 mb-4">
+							<button id="submitButton" type="button">OK</button>
+							<button type="button" id="newDatasetBtt"
+								onclick="window.location.href = '/webAppMotorElectrico/newload?selectedSavedModel=New%20Dataset';"
+								th:text="#{view.home.new.dataset.btt}"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+			aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<span th:text="#{view.modal.body.deleteDataset}"></span>
+						<span id="userNameToDelete"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							onclick="$('#confirmDeleteModal').modal('hide');"
+							th:text="#{view.modal.delete.candel.btt}"></button>
+						<button type="button" class="btn btn-danger" id="confirmDeleteButton"
+							th:text="#{view.modal.delete.btt}"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<th:block th:insert="~{/fragments/footer}"></th:block>
+</body>
+<script>
+	$(document).ready(function () {
+		if (!$("#warningsDivAPI").is(":visible")) {
+			$("#manageLink").css({"display": "inline"});
+			if ($("#loggedUserFlag").val() == 'admin') {
+				$("#adminUsersBtt").css({"display": "inline"});
+			}
+			$("#logout").css({"display": "inline"});
+		}
+	});
+
+	function confirmDelete(usuario) {
+		document.getElementById("confirmDeleteButton").setAttribute("onclick", "eliminarItem('" + usuario + "')");
+
+		var partes = usuario.split(".");
+		var nombreSinExtension = partes[0];
+
+		document.getElementById("userNameToDelete").innerText = nombreSinExtension;
+
+		$('#confirmDeleteModal').modal('show');
+	}
+</script>
+
+</html>
