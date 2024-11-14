@@ -1,8 +1,7 @@
 # Detection and Diagnosis of Bearing Faults on Electric Motors
 This repo contains the source code of a tool for bearing fault detection and diagnosis.
 
-The tool provides explainable and interpretable bearing fault detection, diagnosis and classification. Users can use well-known preloaded datasets or upload their own to perform bearing fault analysis. Uploaded raw vibration data is compressed into a health indicator that determines the stage of degradation of the bearing. The primary goal of the software is to detect, diagnose and clas-
-sify faults in rotating machinery without any human intervention (e.g., manually extracting features), while providing users with explainable and interpretable results.
+The tool provides explainable and interpretable bearing fault detection, diagnosis and classification. Users can use well-known preloaded datasets or upload their own to perform bearing fault analysis. Uploaded raw vibration data is compressed into a health indicator that determines the stage of degradation of the bearing. The primary goal of the software is to detect, diagnose and classify faults in rotating machinery without any human intervention (e.g., manually extracting features), while providing users with explainable and interpretable results.
 
 The architecture of the proposed software is shown in the following figure.
 
